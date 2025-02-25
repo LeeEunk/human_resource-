@@ -49,8 +49,26 @@ public class AnnualLeaveController {
         return "redirect:/annual-leave/" + email;
     }
 
+    // 연차 수정 API
+    @PostMapping("/update/{id}")
+    public String updateAnnualLeave(@PathVariable("id") Long id,
+                                    @RequestParam("email") String email,
+                                    @RequestParam("newLeaveDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate newLeaveDate,
+                                    @RequestParam("newReason") String newReason,
+                                    RedirectAttributes redirectAttributes) {
+        boolean success = employeeService.updateAnnualLeave(id, newLeaveDate, newReason);
+
+        if (success) {
+            redirectAttributes.addFlashAttribute("message", "연차가 성공적으로 수정되었습니다.");
+        }else {
+            redirectAttributes.addFlashAttribute("error", "연차 수정이 불가능합니다. (이미 지난 연차는 변경할 수 없습니다.");
+        }
+
+        return "redirect:/annual-leave/" + email;
+    }
+
     // 연차 삭제 API (id 기준으로 삭제)
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteAnnualLeave(@PathVariable("id") Long id,
                                     @RequestParam("email") String email,
                                     RedirectAttributes redirectAttributes) {

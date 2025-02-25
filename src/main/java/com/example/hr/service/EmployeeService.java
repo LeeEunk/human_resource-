@@ -58,6 +58,28 @@ public class EmployeeService {
         return true;
     }
 
+    public boolean updateAnnualLeave(Long leaveId, LocalDate newLeaveDate, String newReason) {
+        AnnualLeave annualLeave = annualLeaveRopository.findById(leaveId)
+                .orElseThrow(() -> new RuntimeException("연차 기록을 찾을 수 없습니다."));
+
+        // 이미 사용한(과거 날짜) 연차는 수정 불가
+        if (annualLeave.getLeaveDate().isBefore(LocalDate.now())) {
+            return false;
+        }
+
+        // 새로운 날짜가 과거 날짜인지 확인
+        if (newLeaveDate.isBefore(LocalDate.now())) {
+            return false;
+        }
+
+        // 연차 정보 수정
+        annualLeave.setLeaveDate(newLeaveDate);
+        annualLeave.setReason(newReason);
+        annualLeaveRopository.save(annualLeave);
+
+        return true;
+    }
+
     public boolean deleteAnnualLeave(Long leaveId) {
         AnnualLeave annualLeave = annualLeaveRopository.findById(leaveId)
                 .orElseThrow(() -> new RuntimeException("연차 기록을 찾을 수 없습니다."));
