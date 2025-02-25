@@ -35,9 +35,9 @@
 # 프로젝트 셋업
 Spring Initializr에서 다음 설정으로 프로젝트 생성:
 
-Spring Boot 3
-MySQL Driver
-Spring Data JPA
-Thymeleaf
-Spring Web
-Lombok
+- Spring Boot 3
+- MySQL Driver
+- Spring Data JPA
+- Thymeleaf
+- Spring Web
+- Lombok
