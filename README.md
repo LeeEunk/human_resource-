@@ -1,4 +1,5 @@
 # 📂 프로젝트 디렉토리 구조
+```
 📦 your-project-name
  ┣ 📂 src
  ┃ ┣ 📂 main
@@ -28,7 +29,7 @@
  ┃ ┃ ┃    ┗ 📜 EmployeeServiceTest.java       # 연차 서비스 테스트 코드
  ┣ 📜 pom.xml                                  # Maven 의존성 관리
  ┣ 📜 README.md                                # 프로젝트 설명 파일
-
+```
 
 
 # 프로젝트 셋업
