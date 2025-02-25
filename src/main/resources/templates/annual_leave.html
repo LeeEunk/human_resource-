@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>연차 조회 및 신청</title>
+</head>
+<body>
+<h2>연차 조회</h2>
+<p>남은 연차: <span th:text="${remainingLeave} ?: '데이터 없음'"></span>일</p>
+
+<h3>연차 신청</h3>
+<form action="/annual-leave/request" method="post">
+    <input type="hidden" name="email" th:value="${email}">
+    <label>날짜:</label>
+    <input type="date" name="leaveDate" required id="leaveDate">
+    <script th:inline="javascript">
+        document.getElementById("leaveDate").setAttribute("min", new Date().toISOString().split("T")[0]);
+    </script>
+
+    <label>사유:</label>
+    <input type="text" name="reason" required>
+    <button type="submit">신청</button>
+</form>
+
+<h3>연차 사용 기록</h3>
+<table border="1">
+    <tr>
+        <th>날짜</th>
+        <th>사유</th>
+        <th>삭제</th>
+    </tr>
+    <tr th:each="leave : ${leaveHistory}">
+        <td th:text="${leave.leaveDate}"></td>
+        <td th:text="${leave.reason}"></td>
+        <td>
+            <form th:action="@{/annual-leave/delete/{id}(id=${leave.id})}" method="post">
+                <input type="hidden" name="email" th:value="${email}">
+                <button type="submit">삭제</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+
+<div th:if="${message}" style="color: green;">
+    <p th:text="${message}"></p>
+</div>
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+</body>
+</html>
