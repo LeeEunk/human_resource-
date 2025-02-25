@@ -19,11 +19,23 @@ public class AnnualLeave {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "leave_date", nullable = false)
     private LocalDate leaveDate; // 연차 사용 날짜
+
+    @Column(name = "reason")
     private String reason;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    public boolean updateLeave(LocalDate newLeaveDate, String newReason) {
+        if(newLeaveDate.isBefore(LocalDate.now())) {
+            return false; // 이미 지난 날짜는 수정 불가
+        }
+        this.leaveDate = newLeaveDate;
+        this.reason = newReason;
+        return true;
+    }
 
 }

@@ -50,7 +50,7 @@ public class AnnualLeaveController {
     }
 
     // 연차 수정 API
-    @PostMapping("/update/{id}")
+    @PutMapping ("/update/{id}")
     public String updateAnnualLeave(@PathVariable("id") Long id,
                                     @RequestParam("email") String email,
                                     @RequestParam("newLeaveDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate newLeaveDate,

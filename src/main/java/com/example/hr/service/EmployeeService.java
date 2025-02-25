@@ -58,6 +58,7 @@ public class EmployeeService {
         return true;
     }
 
+    // 연차 수정
     public boolean updateAnnualLeave(Long leaveId, LocalDate newLeaveDate, String newReason) {
         AnnualLeave annualLeave = annualLeaveRopository.findById(leaveId)
                 .orElseThrow(() -> new RuntimeException("연차 기록을 찾을 수 없습니다."));
