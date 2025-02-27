@@ -41,11 +41,11 @@
 </table>
 
 <h3>연차 수정</h3>
-<form action="/annual-leave/update" method="post">
+<form action="" method="post" onsubmit="event.preventDefault(); submitForm();">
     <input type="hidden" name="email" th:value="${email}">
 
     <label>연차 선택:</label>
-    <select name="leaveId">
+    <select name="leaveId" id="leaveId">
         <option th:each="leave : ${leaveHistory}" th:value="${leave.id}" th:text="${leave.leaveDate + ' - ' + leave.reason}"></option>
     </select>
 
@@ -58,8 +58,27 @@
     <button type="submit">수정</button>
 </form>
 
-<script th:inline="javascript">
-    document.getElementById("newLeaveDate").setAttribute("min", new Date().toISOString().split("T")[0]);
+<script>
+    function submitForm() {
+    const leaveId = document.getElementById("leaveId").value;
+    const email = document.querySelector("input[name='email']").value;
+    const leaveDate = document.getElementById("newLeaveDate").value;
+    const reason = document.querySelector("input[name='newReason']").value;
+
+    fetch(`/annual-leave/update/${leaveId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: leaveId, leaveDate, reason })
+    }).then(response => {
+        if (response.ok) {
+            window.location.href = `/annual-leave/${email}`;
+        } else {
+            alert("연차 수정이 불가능합니다. (이미 지난 연차는 변경할 수 없습니다.)");
+        }
+    });
+}
 </script>
 
 <div th:if="${message}" style="color: green;">
