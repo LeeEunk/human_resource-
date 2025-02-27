@@ -60,22 +60,25 @@
 
 <script>
     function submitForm() {
-        const form = document.querySelector("form");
-        const formData = new FormData(form);
-        const leaveId = document.getElementById("leaveId").value;
-        const email = document.querySelector("input[name='email']").value;
+    const leaveId = document.getElementById("leaveId").value;
+    const email = document.querySelector("input[name='email']").value;
+    const leaveDate = document.getElementById("newLeaveDate").value;
+    const reason = document.querySelector("input[name='newReason']").value;
 
-        fetch(`/annual-leave/update/${leaveId}`, {
-            method: "PUT",
-            body: formData
-        }).then(response => {
-            if (response.ok) {
-                window.location.href = `/annual-leave/${email}`;
-            } else {
-                alert("연차 수정에 실패했습니다.");
-            }
-        });
-    }
+    fetch(`/annual-leave/update/${leaveId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: leaveId, leaveDate, reason })
+    }).then(response => {
+        if (response.ok) {
+            window.location.href = `/annual-leave/${email}`;
+        } else {
+            alert("연차 수정이 불가능합니다. (이미 지난 연차는 변경할 수 없습니다.)");
+        }
+    });
+}
 </script>
 
 <div th:if="${message}" style="color: green;">

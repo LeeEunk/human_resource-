@@ -6,6 +6,7 @@ import com.example.hr.repository.AnnualLeaveRopository;
 import com.example.hr.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -59,6 +60,7 @@ public class EmployeeService {
     }
 
     // 연차 수정
+    @Transactional
     public boolean updateAnnualLeave(Long leaveId, LocalDate newLeaveDate, String newReason) {
         AnnualLeave annualLeave = annualLeaveRopository.findById(leaveId)
                 .orElseThrow(() -> new RuntimeException("연차 기록을 찾을 수 없습니다."));
