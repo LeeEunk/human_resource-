@@ -36,7 +36,7 @@
 Spring Initializr에서 다음 설정으로 프로젝트 생성:
 
 - Spring Boot 3
-- MySQL Driver
+- MySQL Driver (8.0)
 - Spring Data JPA
 - Thymeleaf
 - Spring Web

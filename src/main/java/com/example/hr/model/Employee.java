@@ -21,6 +21,7 @@ public class Employee {
 
     private String name;
     private String email;
+    private String password;
     private int totalAnnualLeave = 15; // 기본 연차 15일
     private int usedAnnualLeave = 0;
 
