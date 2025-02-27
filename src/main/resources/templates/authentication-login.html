@@ -9,6 +9,8 @@
 </head>
 
 <body>
+<!-- 에러 메시지가 있을 경우 표시 -->
+<div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
      data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
   <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
