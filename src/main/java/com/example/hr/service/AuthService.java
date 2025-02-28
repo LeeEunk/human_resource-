@@ -24,8 +24,9 @@ public class AuthService {
         Employee employee = userRepository.findById(employeeNumber).orElseThrow(() -> new Exception("존재하지않는 사번입니다."));
         if (employee.getPassword().equals(password)) {
             return employee;
+        }else{
+            throw new Exception("비밀번호가 맞지 않습니다.");
         }
-        return null;
     }
 }
 

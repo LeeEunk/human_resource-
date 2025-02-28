@@ -38,17 +38,15 @@ public class AuthController {
     @PostMapping("/login")
     public String loginUser(@RequestParam("employeeNumber") String employeeNumber,
                             @RequestParam("password") String password,
-                            RedirectAttributes redirectAttributes) throws Exception {
+                            RedirectAttributes redirectAttributes) {
         try {
             Employee employee = authService.login(employeeNumber, password);
-            if (employee != null) {
-                // 로그인 성공 시 index.html로 리다이렉트
-                return "redirect:/index.html";
-            } else {
-                redirectAttributes.addFlashAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
+            if (employee == null) {
+                redirectAttributes.addFlashAttribute("errorMessage", "로그인 정보가 올바르지 않습니다.");
                 return "redirect:/login";
             }
-        } catch(Exception e) {
+            return "index";
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/login";
         }
